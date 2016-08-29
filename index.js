@@ -38,22 +38,20 @@ module.exports = function lessReporter(importsFilter) {
     var sourceMap = new SourceMapConsumer(file.sourceMap);
 
     // resolve original lines and filter to relevant files
-    var mappedResults = file.csslint.results.map(function (result) {
-      var message = result.error;
-
-      if (!message.line || message.rollup) {
+    var mappedResults = file.csslint.report.messages.map(function (result) {
+      if (!result.line || result.rollup) {
         result.file = origFilePath;
         return result;
       }
 
       var origPos = sourceMap.originalPositionFor({
-        line: message.line,
-        column: message.col
+        line: result.line,
+        column: result.col
       });
 
       if (origPos.source) {
-        result.error.line = origPos.line;
-        result.error.col = origPos.column;
+        result.line = origPos.line;
+        result.col = origPos.column;
         result.file = path.resolve(path.join(file.base, origPos.source));
       }
 
@@ -69,15 +67,14 @@ module.exports = function lessReporter(importsFilter) {
 
     // print errors
     mappedResults.forEach(function (result) {
-      var message = result.error;
-      allErrors.push(message);
+      allErrors.push(result);
 
       var location = '';
-      if (typeof message.line != 'undefined') {
+      if (typeof result.line != 'undefined') {
         location =
-          colors.magenta(message.line) +
+          colors.magenta(result.line) +
           ',' +
-          colors.magenta(message.col);
+          colors.magenta(result.col);
       }
 
       gutil.log(
@@ -87,17 +84,17 @@ module.exports = function lessReporter(importsFilter) {
         ':' +
         location +
         ' (' +
-        message.rule.id +
+        result.rule.id +
         ') ');
 
       gutil.log(
-        message.type.toUpperCase() +
+        result.type.toUpperCase() +
         ': ' +
-        message.message +
+        result.message +
         ' ' +
-        message.rule.desc +
+        result.rule.desc +
         ' Browsers: ' +
-        message.rule.browsers);
+        result.rule.browsers);
     });
 
     callback(null, file);
