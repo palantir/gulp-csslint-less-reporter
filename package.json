@@ -1,6 +1,6 @@
 {
   "name": "gulp-csslint-less-reporter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A console reporter for csslint that maps errors back to the original less files using sourcemaps",
   "author": "Palantir Technologies, Inc.",
   "repository": {
@@ -20,16 +20,17 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "globule": "^0.2.0",
+    "globule": "^1.0.0",
     "gulp-util": "^3.0.5",
-    "source-map": "^0.4.2",
+    "source-map": "^0.5.6",
     "through2": "^2.0.0"
   },
   "devDependencies": {
+    "eslint-config-palantir": "^1.0.0",
     "gulp": "^3.9.0",
     "gulp-csslint": "^1.0.0",
-    "gulp-eslint": "^0.14.0",
-    "gulp-if": "^1.2.5",
+    "gulp-eslint": "^3.0.1",
+    "gulp-if": "^2.0.1",
     "gulp-less": "^3.0.3",
     "gulp-sourcemaps": "^1.5.2"
   }
