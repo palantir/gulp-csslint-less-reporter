@@ -26,6 +26,7 @@
     "through2": "^2.0.0"
   },
   "devDependencies": {
+    "eslint-config-palantir": "^1.0.0",
     "gulp": "^3.9.0",
     "gulp-csslint": "^1.0.0",
     "gulp-eslint": "^3.0.1",
